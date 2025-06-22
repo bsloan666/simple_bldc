@@ -181,10 +181,11 @@ void loop() {
           servo.poke();
         }
     }
-  
+    /*
     if(index != prev_index){
       servo.dump();
     }
+    */
     prev_index = index;
   
     servo.cycle(); 
