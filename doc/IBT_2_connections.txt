@@ -1,0 +1,9 @@
+VCC connects to 5V power supply of microcontroller, GND connects to GND of microcontroller.
+
+REN and L_EN are short-circuited and connected to 5V level, the driver can work.
+
+L_PWM, input PWM signal or high level motor forward
+
+R_PWM, input PWM signal or high level motor reverse
+
+
