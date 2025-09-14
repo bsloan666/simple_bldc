@@ -20,7 +20,7 @@ void loop() {
   curr_pot = are.read();
 
   if(curr_pot != prev_pot){
-    Serial.print("ARE VAL`: ");
+    Serial.print("ENCODER VALUE: ");
     Serial.println(curr_pot);
   }
   // put your main code here, to run repeatedly:
