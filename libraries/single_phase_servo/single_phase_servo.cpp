@@ -23,18 +23,21 @@ int SinglePhaseServo::initialize(){
     sbs.initialize(hid.get_address())
     hbr.initialize();
     attachInterrupt(digitalPinToInterrupt(sensor_pin), step, CHANGE);
+    speed = 0;
+    target_pos = 512;
 }
 
-int SinglePhaseServo::poke(){
+void SinglePhaseServo::poke(){
     hbr.set(128);
     hbr.set(-128);
+    lock = 0;
 }
 
-int SinglePhaseServo::lock(){
+void SinglePhaseServo::lock(){
     lock = 1;
 }
 
-int SinglePhaseServo::unlock(){
+void SinglePhaseServo::unlock(){
     lock = 0;
 }
 
@@ -42,9 +45,13 @@ void SinglePhaseServo::set_target(int position){
     target_pos = position;
 }
 
-
 int SinglePhaseServo::get_position(){
     return are.read();
+}
+
+void SinglePhaseServo::cycle(){
+    direction = are.read() - target_pos;
+    speed = abs(direction); 
 }
 
 void step(){
@@ -52,19 +59,15 @@ void step(){
   if(!(lock)){
     if(direction > 0){
       if(sensor_val == HIGH){
-          analogWrite(motor_b_pin, speed);
-          digitalWrite(motor_a_pin, LOW);
+          hbr.set(speed)
       } else {
-          digitalWrite(motor_b_pin, LOW);
-          analogWrite(motor_a_pin, speed);
+          hbr.set(-speed)
       }
     } else {
       if(sensor_val == LOW){
-          analogWrite(motor_b_pin, speed);
-          digitalWrite(motor_a_pin, LOW);
+          hbr.set(speed)
       } else {
-          digitalWrite(motor_b_pin, LOW);
-          analogWrite(motor_a_pin, speed);
+          hbr.set(-speed)
       }
     }
   }

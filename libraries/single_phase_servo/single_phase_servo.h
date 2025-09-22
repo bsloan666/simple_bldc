@@ -12,9 +12,12 @@ class SinglePhaseServo {
     public:
         SinglePhaseServo(int base_id_pin, int enc_pin, int sens_pin, int bridge_pin_a, int bridge_pin_b);
         void initialize();
-        int poke();
+        void poke();
+        void lock();
+        void unlock();
         void set_target(int position);
         int get_position();
+        void cycle();
 
     private:
         AbsoluteRadialEncoder are;
