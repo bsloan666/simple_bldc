@@ -21,11 +21,12 @@ void HardwareID::initialize() {
         }
     }
 
-    delay(100); 
+    delay(100);
+    int last_pin = address_pins[num_pins - 1]; 
     Serial.print("HardwareID sensed from pins ");
     Serial.print(address_pins[0]);
     Serial.print(" - ");
-    Serial.print(address_pins[num_pins - 1]);
+    Serial.print(last_pin);
     Serial.print(" is ");
     Serial.println(my_address);
 
