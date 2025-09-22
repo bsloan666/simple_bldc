@@ -23,6 +23,7 @@ class ServoBusSlave{
 
         int get_command(); 
         int get_data(); 
+        void set_data(int new_data); 
 
     private:
         int device_id;
