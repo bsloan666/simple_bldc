@@ -7,6 +7,7 @@ class OpticalSensor {
     
     public:
         OpticalSensor(int digital_pin);
+        void initialize();
         int read();
 
     private:

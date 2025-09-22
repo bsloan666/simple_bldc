@@ -8,6 +8,7 @@ class AbsoluteRadialEncoder {
     public:
         AbsoluteRadialEncoder(int analog_pin);
 
+        void initialize();
         int read();
 
     private:

@@ -13,6 +13,12 @@ ServoBusMaster::ServoBusMaster(){
 
 void ServoBusMaster::initialize(){
     Wire.begin();
+    Serial.begin(9600);
+
+    Serial.println("ServoBusMaster running");
+
+    delay(100);
+    Serial.end();
 }
 
 void ServoBusMaster::send(int device, int new_command, int new_data){
@@ -32,16 +38,23 @@ int ServoBusMaster::request(int device){
     return data;
 }
 
-ServoBusSlave::ServoBusSlave(int dev_id):
-    device_id(dev_id){
+ServoBusSlave::ServoBusSlave(){
     command = 0;
     data = 0;
 }
 
-void ServoBusSlave::initialize(){
+void ServoBusSlave::initialize(int dev_id){
+    device_id = dev_id;
     Wire.begin(device_id);
     Wire.onRequest(respond_callback);
     Wire.onReceive(receive_callback);
+    Serial.begin(9600);
+
+    Serial.print("ServoBusSlave running at address ");
+    Serial.println(device_id);
+
+    delay(100);
+    Serial.end();
 }
 
 void respond_callback(void){

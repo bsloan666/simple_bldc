@@ -17,9 +17,9 @@ class ServoBusMaster{
 
 class ServoBusSlave{
     public:
-        ServoBusSlave(int dev_id);
+        ServoBusSlave();
 
-        void initialize(void);
+        void initialize(dev_id);
 
         int get_command(); 
         int get_data(); 

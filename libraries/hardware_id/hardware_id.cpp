@@ -19,6 +19,17 @@ void HardwareID::initialize() {
             my_address += (1 << i);
         }
     }
+    Serial.begin(9600);
+
+    Serial.print("HardwareID sensed from pins ");
+    Serial.print(address_pins[0]);
+    Serial.print(" - ");
+    Serial.print(address_pins[num_pins - 1]);
+    Serial.print(" is ");
+    Serial.println(my_address);
+
+    delay(100);
+    Serial.end();
 }
 
 int HardwareID::address() {

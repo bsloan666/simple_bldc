@@ -4,10 +4,10 @@
 
 #include <servo_bus.h>
 
-ServoBusSlave sbs = ServoBusSlave(8);
+ServoBusSlave sbs = ServoBusSlave();
 
 void setup() {
-  sbs.initialize();
+  sbs.initialize(8);
 }
 
 void loop() {
