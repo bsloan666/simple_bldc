@@ -7,7 +7,7 @@ class HardwareID {
     public:
         HardwareID(int base_pin, int n_pins);
 
-        initialize();
+        void initialize();
         int address();
 
     private:

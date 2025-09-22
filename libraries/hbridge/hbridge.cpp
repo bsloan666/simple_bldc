@@ -2,7 +2,7 @@
 
 HBridge::HBridge(unsigned int _pin_a, unsigned int _pin_b){
     pin_a = _pin_a;
-    pin_b = pin_b;
+    pin_b = _pin_b;
 }
 
 void HBridge::initialize(){

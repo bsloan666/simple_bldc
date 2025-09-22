@@ -5,6 +5,7 @@
 #include <hardware_id.h>
 #include <abs_encoder.h>
 #include <servo_bus.h>
+#include <opto_sensor.h>
 #include <Arduino.h>
 
 class SinglePhaseServo {
@@ -24,7 +25,7 @@ class SinglePhaseServo {
         OpticalSensor ose;
         HBridge hbr;
         ServoBusSlave sbs;
-        HardareID hid;
+        HardwareID hid;
         int target_pos;
 };
 #endif

@@ -2,13 +2,14 @@
 
 
 HardwareID::HardwareID(int base_pin, int n_pins):
-    num_pins = n_pins {
+    num_pins(n_pins) {
     for (int i = 0; i < num_pins; i++) {
         address_pins[i]  = base_pin + i;
     }
 }
 
 void HardwareID::initialize() {
+    Serial.begin(9600);
     for (int i = 0; i < num_pins; i++) {
         pinMode(address_pins[i], INPUT_PULLUP);
     }
@@ -19,8 +20,8 @@ void HardwareID::initialize() {
             my_address += (1 << i);
         }
     }
-    Serial.begin(9600);
 
+    delay(100); 
     Serial.print("HardwareID sensed from pins ");
     Serial.print(address_pins[0]);
     Serial.print(" - ");

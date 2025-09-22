@@ -1,7 +1,7 @@
 #ifndef __HBRIDGE_H__
 #define __HBRIDGE_H__
 
-#include <Ardiono.h>
+#include <Arduino.h>
 
 class HBridge {
   public:

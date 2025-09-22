@@ -10,8 +10,8 @@ class OpticalSensor {
         void initialize();
         int read();
 
-    private:
         int pin;
+    private:
         unsigned int value;
 };
 #endif

@@ -3,12 +3,32 @@
 
 volatile int direction;
 volatile int sensor_val;
-volatile int lock;
+volatile int _lock;
 volatile int speed;
-   
+volatile HBridge *ghbr;   
+volatile OpticalSensor *gose;
 
-SinglePhaseServo(int base_id_pin, int enc_pin, int sens_pin, int bridge_pin_a, int bridge_pin_b):
-    hid(base_pin_id, 4),
+void step(){
+  sensor_val = gose->read();
+  if(!(_lock)){
+    if(direction > 0){
+      if(sensor_val == HIGH){
+          ghbr->set(speed);
+      } else {
+          ghbr->set(-speed);
+      }
+    } else {
+      if(sensor_val == LOW){
+          ghbr->set(speed);
+      } else {
+          ghbr->set(-speed);
+      }
+    }
+  }
+}
+
+SinglePhaseServo::SinglePhaseServo(int base_id_pin, int enc_pin, int sens_pin, int bridge_pin_a, int bridge_pin_b):
+    hid(base_id_pin, 4),
     sbs(),
     are(enc_pin),
     ose(sens_pin),
@@ -17,28 +37,30 @@ SinglePhaseServo(int base_id_pin, int enc_pin, int sens_pin, int bridge_pin_a, i
     
 }
 
-int SinglePhaseServo::initialize(){
+void SinglePhaseServo::initialize(){
     hid.initialize();
     ose.initialize();
-    sbs.initialize(hid.get_address())
+    sbs.initialize(hid.address());
     hbr.initialize();
-    attachInterrupt(digitalPinToInterrupt(sensor_pin), step, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(ose.pin), step, CHANGE);
     speed = 0;
     target_pos = 512;
+    ghbr = &hbr;
+    gose = &ose;
 }
 
 void SinglePhaseServo::poke(){
     hbr.set(128);
     hbr.set(-128);
-    lock = 0;
+    _lock = 0;
 }
 
 void SinglePhaseServo::lock(){
-    lock = 1;
+    _lock = 1;
 }
 
 void SinglePhaseServo::unlock(){
-    lock = 0;
+    _lock = 0;
 }
 
 void SinglePhaseServo::set_target(int position){
@@ -52,23 +74,4 @@ int SinglePhaseServo::get_position(){
 void SinglePhaseServo::cycle(){
     direction = are.read() - target_pos;
     speed = abs(direction); 
-}
-
-void step(){
-  sensor_val = ose.read();
-  if(!(lock)){
-    if(direction > 0){
-      if(sensor_val == HIGH){
-          hbr.set(speed)
-      } else {
-          hbr.set(-speed)
-      }
-    } else {
-      if(sensor_val == LOW){
-          hbr.set(speed)
-      } else {
-          hbr.set(-speed)
-      }
-    }
-  }
 }
