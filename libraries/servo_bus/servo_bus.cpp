@@ -75,6 +75,10 @@ int ServoBusSlave::get_command(){
     return command;
 }
 
+void ServoBusSlave::reset_command(){
+    command = 0;
+}
+
 int ServoBusSlave::get_data(){
     return data;
 }

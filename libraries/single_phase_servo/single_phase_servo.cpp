@@ -8,6 +8,14 @@ volatile int speed;
 volatile HBridge *ghbr;   
 volatile OpticalSensor *gose;
 
+enum {
+    SET_POS = 10,
+    LOCK = 20,
+    UNLOCK = 30,
+    RELAX = 40
+};
+
+
 void step(){
   sensor_val = gose->read();
   if(!(_lock)){
@@ -47,6 +55,7 @@ void SinglePhaseServo::initialize(){
     target_pos = 512;
     ghbr = &hbr;
     gose = &ose;
+    poke();
 }
 
 void SinglePhaseServo::poke(){
@@ -72,6 +81,27 @@ int SinglePhaseServo::get_position(){
 }
 
 void SinglePhaseServo::cycle(){
-    direction = are.read() - target_pos;
-    speed = abs(direction); 
+    int command = sbs.get_command();
+    int sign = 1;
+    if(command) {
+        if(command == SET_POS) {
+            target_pos = sbs.get_data();
+            poke();
+        } else if (command == LOCK){
+            _lock = 1;
+        } else if (command == UNLOCK){ 
+            _lock = 0;
+        } else if (command == RELAX){ 
+            speed = 0;
+        }
+        sbs.reset_command();
+    } else {
+        direction = (are.read() - target_pos)/8;
+        if( direction < 0){
+            sign = -1;
+        }
+        direction *= direction * sign;
+        speed = abs(direction);
+        sbs.set_data(are.read());
+    }
 }

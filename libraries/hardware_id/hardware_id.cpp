@@ -23,6 +23,8 @@ void HardwareID::initialize() {
 
     delay(100);
     int last_pin = address_pins[num_pins - 1]; 
+
+    Serial.flush();
     Serial.print("HardwareID sensed from pins ");
     Serial.print(address_pins[0]);
     Serial.print(" - ");

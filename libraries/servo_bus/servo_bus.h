@@ -22,6 +22,7 @@ class ServoBusSlave{
         void initialize(int dev_id);
 
         int get_command(); 
+        void reset_command(); 
         int get_data(); 
         void set_data(int new_data); 
 
