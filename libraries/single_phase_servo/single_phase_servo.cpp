@@ -2,6 +2,7 @@
 
 
 volatile int direction;
+volatile int prev_direction;
 volatile int sensor_val;
 volatile int _lock;
 volatile int speed;
@@ -52,6 +53,9 @@ void SinglePhaseServo::initialize(){
     hbr.initialize();
     attachInterrupt(digitalPinToInterrupt(ose.pin), step, CHANGE);
     speed = 0;
+    direction = 0;
+    prev_direction = 0;
+    _lock = 0;
     target_pos = 512;
     ghbr = &hbr;
     gose = &ose;
@@ -82,7 +86,6 @@ int SinglePhaseServo::get_position(){
 
 void SinglePhaseServo::cycle(){
     int command = sbs.get_command();
-    int sign = 1;
     if(command) {
         if(command == SET_POS) {
             target_pos = sbs.get_data();
@@ -95,13 +98,15 @@ void SinglePhaseServo::cycle(){
             speed = 0;
         }
         sbs.reset_command();
+        _lock = 0;
     } else {
-        direction = (are.read() - target_pos)/8;
-        if( direction < 0){
-            sign = -1;
-        }
-        direction *= direction * sign;
+        int encoder = are.read();
+        direction = (encoder - target_pos);
         speed = abs(direction);
-        sbs.set_data(are.read());
+        sbs.set_data(encoder);
+        // if(prev_direction * direction < 0){
+        //     _lock = 1;
+        // }
+        prev_direction  = direction;
     }
 }
