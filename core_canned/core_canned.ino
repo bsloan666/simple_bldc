@@ -26,13 +26,13 @@ int SET_SPEED = 20;     // 20 +-SPEED TIMEOUT
 int SET_LOCK  = 30;     // 30
 int SET_UNLOCK  = 40;    // 40
 
-int speeds[8] = {32, -32, 64, -64, 100, -100, 200, -200};
+int speeds[8] = {128, -128, 255, -255, 128, -128, 255, -255};
 
 // these are for the big motor
 // unsigned long times[8] = {1000, 1000, 900, 900, 700, 700, 400, 400};
 
 // these are for the smaller motor
-unsigned long times[8] = {500, 500, 600, 600, 400, 400, 200, 200};
+unsigned long times[8] = {500, 500, 250, 250, 500, 500, 250, 250};
 
 void step(){
   sensor_val = digitalRead(sensor_pin);
