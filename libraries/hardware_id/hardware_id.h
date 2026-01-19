@@ -4,8 +4,11 @@
 #include <Arduino.h> 
 
 class HardwareID {
+    /*
+    Use pins 7,8,9,10
+    */
     public:
-        HardwareID(int base_pin, int n_pins);
+        HardwareID();
 
         void initialize();
         int address();

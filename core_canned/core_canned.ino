@@ -1,4 +1,6 @@
 
+#include <hardware_id.h>
+
 volatile unsigned int motor_a_pin;
 volatile unsigned int motor_b_pin;
 volatile unsigned int sensor_pin;
@@ -27,6 +29,10 @@ int SET_LOCK  = 30;     // 30
 int SET_UNLOCK  = 40;    // 40
 
 int speeds[8] = {128, -128, 255, -255, 128, -128, 255, -255};
+
+HardwareID hid = HardwareID();
+
+
 
 // these are for the big motor
 // unsigned long times[8] = {1000, 1000, 900, 900, 700, 700, 400, 400};
@@ -174,7 +180,7 @@ SimpleBLDCServo servo = SimpleBLDCServo(5, 6, 2);
 //SimpleBLDCServo servo = SimpleBLDCServo(9, 10, 3);
 void setup() {
   // put your setup code here, to run once:
-
+  hid.initialize();
   servo.init_pins();
   Serial.begin(9600);
   prev_time = millis();

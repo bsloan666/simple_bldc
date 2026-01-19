@@ -1,10 +1,10 @@
 #include "hardware_id.h"
 
 
-HardwareID::HardwareID(int base_pin, int n_pins):
-    num_pins(n_pins) {
+HardwareID::HardwareID():
+    num_pins(4) {
     for (int i = 0; i < num_pins; i++) {
-        address_pins[i]  = base_pin + i;
+        address_pins[i]  = 7 + i;
     }
 }
 
