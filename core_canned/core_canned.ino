@@ -1,6 +1,7 @@
 
 #include <hardware_id.h>
 #include <servo_bus.h>
+#include <beep_tones.h>
 
 volatile unsigned int motor_a_pin;
 volatile unsigned int motor_b_pin;
@@ -33,7 +34,7 @@ int speeds[8] = {128, -128, 255, -255, 128, -128, 255, -255};
 
 HardwareID hid = HardwareID();
 ServoBusSlave sbus = ServoBusSlave();
-
+BeepToneGenerator btg = BeepToneGenerator();
 
 // these are for the big motor
 // unsigned long times[8] = {1000, 1000, 900, 900, 700, 700, 400, 400};
@@ -185,6 +186,10 @@ void setup() {
 
   sbus.initialize(hid.address());
 
+  btg.initialize();
+
+  
+
   servo.init_pins();
   Serial.begin(9600);
   prev_time = millis();
@@ -192,6 +197,8 @@ void setup() {
   interval = 20;
   delay(1000);
   servo.set_speed(speeds[operation], times[operation]);
+
+  btg.test();
  }
 
 

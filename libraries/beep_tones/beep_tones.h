@@ -7,12 +7,13 @@ class Note {
     public:
         float pitch;
         unsigned long length;
+        Note(): pitch(261.63), length(64){} 
         Note(float _p, unsigned long _l): pitch(_p), length(_l){} 
 };
 
 class BeepToneGenerator {
     public:
-        BeepToneGenerater();
+        BeepToneGenerator();
         void initialize();
         void play(Note notes[], unsigned int count); 
         void test();

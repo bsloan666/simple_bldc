@@ -38,6 +38,8 @@ void BeepToneGenerator::initialize(){
     tones[22] = 293.66 * 4;
     tones[23] = 329.63 * 4;
 
+    pinMode(13, OUTPUT);
+
     Serial.begin(9600);
     Serial.flush();
     Serial.print("Beep tones initialized on pin 13");
@@ -65,14 +67,24 @@ void BeepToneGenerator::play(Note notes[], unsigned int count){
 }
 
 void BeepToneGenerator::test(){
-    Note scale[48];
+    Note scale[29];
     int i;
-    for(i = 0; i <24; i++){
+    for(i = 0; i <7; i++){
         scale[i] = Note(tones[i], 64);
     }    
-    for(i = 24; i <= 0; i--){
+    scale[7] = Note(tones[7], 128);
+    for(i = 8; i < 14; i++){
         scale[i] = Note(tones[i], 64);
     } 
-    play(scale, 48);
+    scale[14] = Note(tones[14], 128);
+    for(i = 15; i < 21; i++){
+        scale[i] = Note(tones[28-i], 64);
+    } 
+    scale[21] = Note(tones[7], 128);
+    for(i = 22; i < 28; i++){
+        scale[i] = Note(tones[28-i], 64);
+    } 
+    scale[28] = Note(tones[0], 128);
+    play(scale, 29);
 }
 
