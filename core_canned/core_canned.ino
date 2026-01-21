@@ -1,5 +1,6 @@
 
 #include <hardware_id.h>
+#include <servo_bus.h>
 
 volatile unsigned int motor_a_pin;
 volatile unsigned int motor_b_pin;
@@ -31,7 +32,7 @@ int SET_UNLOCK  = 40;    // 40
 int speeds[8] = {128, -128, 255, -255, 128, -128, 255, -255};
 
 HardwareID hid = HardwareID();
-
+ServoBusSlave sbus = ServoBusSlave();
 
 
 // these are for the big motor
@@ -181,6 +182,9 @@ SimpleBLDCServo servo = SimpleBLDCServo(5, 6, 2);
 void setup() {
   // put your setup code here, to run once:
   hid.initialize();
+
+  sbus.initialize(hid.address());
+
   servo.init_pins();
   Serial.begin(9600);
   prev_time = millis();
@@ -194,6 +198,11 @@ void setup() {
 
 void loop() {
   curr_time = millis();
+
+  if(sbus.get_command() == 12){
+    sbus.set_data(sbus.get_data() + 1);
+    sbus.reset_command();
+  }
   if((curr_time - prev_time) >= interval){
     prev_time = curr_time;
     
