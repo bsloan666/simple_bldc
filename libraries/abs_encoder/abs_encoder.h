@@ -6,13 +6,12 @@
 class AbsoluteRadialEncoder {
     
     public:
-        AbsoluteRadialEncoder(int analog_pin);
+        AbsoluteRadialEncoder();
 
         void initialize();
         int read();
 
     private:
-        int pin;
-        unsigned int value;
+        int pins[8];
 };
 #endif
