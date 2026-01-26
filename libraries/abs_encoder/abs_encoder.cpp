@@ -38,12 +38,12 @@ int gray_lookup[256] = {
 };
 
 
-AbsoluteRadialEncoder::AbsoluteRadialEncoder():
+AbsoluteRotaryEncoder::AbsoluteRotaryEncoder():
 {
    
 }
 
-void AbsoluteRadialEncoder::initialize(){
+void AbsoluteRotaryEncoder::initialize(){
 
     // analog pin assignments
     pins[0] = A0;
@@ -65,13 +65,13 @@ void AbsoluteRadialEncoder::initialize(){
 
     Serial.begin(9600);
 
-    Serial.print("AbsoluteRadialEncoder running");
+    Serial.print("AbsoluteRotaryEncoder running");
 
     delay(100);
     Serial.end();
 }
 
-int AbsoluteRadialEncoder::read(){
+int AbsoluteRotaryEncoder::read(){
     int val8 = digitalRead(pins[0]) == HIGH? 1: 0;
     int val7 = digitalRead(pins[1]) == HIGH? 1: 0;
     int val6 = digitalRead(pins[2]) == HIGH? 1: 0;

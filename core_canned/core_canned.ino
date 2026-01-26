@@ -2,6 +2,7 @@
 #include <hardware_id.h>
 #include <servo_bus.h>
 #include <beep_tones.h>
+#include <abs_encoder.h>
 
 volatile unsigned int motor_a_pin;
 volatile unsigned int motor_b_pin;
@@ -30,17 +31,18 @@ int SET_SPEED = 20;     // 20 +-SPEED TIMEOUT
 int SET_LOCK  = 30;     // 30
 int SET_UNLOCK  = 40;    // 40
 
-int speeds[8] = {128, -128, 255, -255, 128, -128, 255, -255};
+int speeds[8] = {240, -240, 240, -240, 240, -240, 240, -240};
 
 HardwareID hid = HardwareID();
 ServoBusSlave sbus = ServoBusSlave();
 BeepToneGenerator btg = BeepToneGenerator();
+AbsoluteRotaryEncoder are = AbsoluteRotaryEncoder();
 
 // these are for the big motor
 // unsigned long times[8] = {1000, 1000, 900, 900, 700, 700, 400, 400};
 
 // these are for the smaller motor
-unsigned long times[8] = {500, 500, 250, 250, 500, 500, 250, 250};
+unsigned long times[8] = {500, 500, 500, 500, 500, 500, 500, 500};
 
 void step(){
   sensor_val = digitalRead(sensor_pin);
@@ -162,7 +164,7 @@ class SimpleBLDCServo {
     {
       if(timeout){
         if(curr_time >= start_time + timeout){
-          lock();
+          // lock();
           delay(200);
           unlock();
           delay(40);

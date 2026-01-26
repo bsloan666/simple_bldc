@@ -3,10 +3,10 @@
 
 #include <Arduino.h>
 
-class AbsoluteRadialEncoder {
+class AbsoluteRotaryEncoder {
     
     public:
-        AbsoluteRadialEncoder();
+        AbsoluteRotaryEncoder();
 
         void initialize();
         int read();

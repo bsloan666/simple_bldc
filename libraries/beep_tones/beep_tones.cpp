@@ -42,7 +42,7 @@ void BeepToneGenerator::initialize(){
 
     Serial.begin(9600);
     Serial.flush();
-    Serial.print("Beep tones initialized on pin 13");
+    Serial.println("Beep tones initialized on pin 13");
     delay(100);
     Serial.end();
 }   
