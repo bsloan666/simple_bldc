@@ -13,9 +13,7 @@ analogWrite outputs a 0–255 PWM square wave, while analogRead expects 0–5V D
 Key Details and Requirements 
 ----------------------------
 
-* Method: 
-
-Connect Pin A (PWM out) \(\rightarrow \) Resistor \(\rightarrow \) Pin B (Analog in). 
+* Method: Connect Pin A (PWM out) -> Resistor -> Pin B (Analog in). 
 Also, connect a capacitor from Pin B to Ground.
 * The Problem with Direct Connection: analogWrite(val) generates a pulse-width modulated signal (switching between 0V and 5V). 
 analogRead() samples voltage at a specific moment, resulting in inconsistent readings (either 0 or 1023) rather than a mapped 0–1023 value, 
@@ -30,6 +28,6 @@ Implementation (Simplified) 
 To make this work directly, you must smooth the PWM signal into a DC voltage: 
 
     1) Arduino A (Sender): analogWrite(9, 127); (Outputs ~2.5V PWM)
-    2) Circuit: Pin 9 \(\rightarrow \) 1kΩ Resistor \(\rightarrow \) Pin A0 on Board B.
-    3) Circuit: Pin A0 on Board B \(\rightarrow \) 10uF Capacitor \(\rightarrow \) GND.
+    2) Circuit: Pin 9 -> 1kΩ Resistor -> Pin A0 on Board B.
+    3) Circuit: Pin A0 on Board B -> 10uF Capacitor -> GND.
     4) Arduino B (Receiver): int val = analogRead(A0); (Reads roughly 512). 
