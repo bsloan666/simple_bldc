@@ -21,6 +21,8 @@ unsigned long prev_time;
 double curr_encoder;
 double prev_encoder;
 
+
+int prev_pos;
 unsigned int curr_pot;
 unsigned int prev_pot;
 volatile int speed;
@@ -152,6 +154,8 @@ class SimpleBLDCServo {
       timeout = timeo;
       curr_time = start_time = millis();
       speed = abs(direction);
+
+      Serial.println(direction);
       poke();
     }
 
@@ -162,6 +166,15 @@ class SimpleBLDCServo {
 
     void cycle()
     {
+      /*
+      int pos = are.read();
+
+      if(pos != prev_pos){
+        Serial.println(pos);
+      }
+
+      prev_pos = pos;
+      */
       if(timeout){
         if(curr_time >= start_time + timeout){
           // lock();
@@ -189,7 +202,7 @@ void setup() {
   sbus.initialize(hid.address());
 
   btg.initialize();
-
+  are.initialize();
   
 
   servo.init_pins();

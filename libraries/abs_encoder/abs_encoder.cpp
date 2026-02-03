@@ -38,7 +38,7 @@ int gray_lookup[256] = {
 };
 
 
-AbsoluteRotaryEncoder::AbsoluteRotaryEncoder():
+AbsoluteRotaryEncoder::AbsoluteRotaryEncoder()
 {
    
 }
@@ -85,29 +85,29 @@ int AbsoluteRotaryEncoder::read(){
     int val1 = digitalRead(pins[7]) == HIGH? 1: 0;
 
     // DEBUG
+    /*
     Serial.begin(9600);
 
     Serial.print(" ");
-    Serial.print(val8);
-    Serial.print(" ");
-    Serial.print(val7);
-    Serial.print(" ");
-    Serial.print(val6);
-    Serial.print(" ");
-    Serial.print(val5);
-    Serial.print(" ");
-    Serial.print(val4);
-    Serial.print(" ");
-    Serial.print(val3);
+    Serial.print(val1);
     Serial.print(" ");
     Serial.print(val2);
     Serial.print(" ");
-    Serial.println(val1);
+    Serial.print(val3);
+    Serial.print(" ");
+    Serial.print(val4);
+    Serial.print(" ");
+    Serial.print(val5);
+    Serial.print(" ");
+    Serial.print(val6);
+    Serial.print(" ");
+    Serial.print(val7);
+    Serial.print(" ");
+    Serial.println(val8);
 
-    delay(1000);
     Serial.end();
+    */
     // DEBUG
-
 
     long graycode = val1 << 7 | val2 << 6 | val3 << 5 | val4 << 4 | val5 << 3 | val6 << 2 | val7 << 1 | val8;
     long pos = gray_lookup[graycode];

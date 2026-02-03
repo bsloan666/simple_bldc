@@ -1,0 +1,9 @@
+How to AnalogRead Across Arduino Boards
+=======================================
+
+(Thanks, Googs)
+
+Arduino: can an arduino A communicate an analog value to another arduino B by connecting the boards by ground and analog pin 1, then analogWrite(value) from A afterwhich analogRead() from B would provide B with [roughly] the same value?
+
+
+Yes, you can connect two Arduinos (sharing a ground) to communicate a value from a PWM-capable pin on A to an analog input pin on B, but analogRead(B) will not directly equal the value from analogWrite(A) without additional components. analogWrite outputs a 0–255 PWM square wave, while analogRead expects 0–5V DC, requiring an RC filter (resistor + capacitor) to smooth the signal for accurate reading. Key Details and Requirements Method: Connect Pin A (PWM out) \(\rightarrow \) Resistor \(\rightarrow \) Pin B (Analog in). Also, connect a capacitor from Pin B to Ground.The Problem with Direct Connection: analogWrite(val) generates a pulse-width modulated signal (switching between 0V and 5V). analogRead() samples voltage at a specific moment, resulting in inconsistent readings (either 0 or 1023) rather than a mapped 0–1023 value, unless the signal is filtered.Value Mapping: Because analogWrite works in 8-bit (0–255) and analogRead works in 10-bit (0–1023), you must scale the value (e.g., \(ReadValue=WriteValue\times 4\)).Alternative: For better accuracy, use digital communication methods like Serial, I2C, or SPI. Implementation (Simplified) To make this work directly, you must smooth the PWM signal into a DC voltage: Arduino A (Sender): analogWrite(9, 127); (Outputs ~2.5V PWM)Circuit: Pin 9 \(\rightarrow \) 1kΩ Resistor \(\rightarrow \) Pin A0 on Board B.Circuit: Pin A0 on Board B \(\rightarrow \) 10uF Capacitor \(\rightarrow \) GND.Arduino B (Receiver): int val = analogRead(A0); (Reads roughly 512). 

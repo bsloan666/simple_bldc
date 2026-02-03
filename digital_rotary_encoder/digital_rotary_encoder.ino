@@ -98,7 +98,7 @@ void setup() {
   display.clear();
   pinMode(2, OUTPUT);
   display.setBrightness(7);
-  Serial.begin(9600);
+  // Serial.begin(9600);
 }
 
 // the loop function runs over and over again forever
@@ -119,10 +119,11 @@ if(1){
 
   if(prev_pos != pos){
     display.showNumberDecEx(pos, 0, false, 4, 0);
-    Serial.println(pos);
+    // Serial.println(pos);
     beep();
+    delay(50);
   }
-  
+  prev_prev_pos = prev_pos;
   prev_pos = pos;
 
 } else {
