@@ -33,7 +33,7 @@ int SET_SPEED = 20;     // 20 +-SPEED TIMEOUT
 int SET_LOCK  = 30;     // 30
 int SET_UNLOCK  = 40;    // 40
 
-int speeds[8] = {240, -240, 240, -240, 240, -240, 240, -240};
+int speeds[8] = {92, -92, 128, -128, 255, -255, 128, -128};
 
 HardwareID hid = HardwareID();
 ServoBusSlave sbus = ServoBusSlave();
@@ -44,7 +44,7 @@ AbsoluteRotaryEncoder are = AbsoluteRotaryEncoder();
 // unsigned long times[8] = {1000, 1000, 900, 900, 700, 700, 400, 400};
 
 // these are for the smaller motor
-unsigned long times[8] = {500, 500, 500, 500, 500, 500, 500, 500};
+unsigned long times[8] = {2000, 2000, 1000, 1000, 500, 500, 1000, 1000};
 
 void step(){
   sensor_val = digitalRead(sensor_pin);
@@ -156,7 +156,7 @@ class SimpleBLDCServo {
       speed = abs(direction);
 
       Serial.println(direction);
-      poke();
+      //poke();
     }
 
     void set_to_off(){
@@ -179,7 +179,7 @@ class SimpleBLDCServo {
         if(curr_time >= start_time + timeout){
           // lock();
           delay(200);
-          unlock();
+          // unlock();
           delay(40);
           timeout = 0;
           cmd = 0;
